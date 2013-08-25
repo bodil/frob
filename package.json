@@ -1,5 +1,5 @@
 {
-  "name": "ohai",
+  "name": "frob",
   "version": "0.0.1",
   "description": "Desktop scale configuration management",
   "bin": "./frob.js",
