@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var fs = require("fs");
 var lisp = require("lispyscript");
 require("lispyscript/lib/require");

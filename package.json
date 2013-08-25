@@ -1,6 +1,15 @@
 {
   "name": "ohai",
   "version": "0.0.1",
+  "description": "Desktop scale configuration management",
+  "bin": "./frob.js",
+  "license": "Apache 2",
+  "homepage": "https://github.com/bodil/frob",
+  "bugs": "https://github.com/bodil/frob/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bodil/frob.git"
+  },
   "dependencies": {
     "lispyscript": "~0.3.6",
     "file": "~0.2.1",
