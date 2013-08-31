@@ -226,8 +226,7 @@
 (defn aptInstall (pkgs)
   (print (ansi "Install: " "magenta+bold")
          (ansi (pkgs.join " ") "yellow+bold") "\n")
-  (var args (array "sudo" "apt-get" "install" "-y")
-       result null)
+  (var args (array "sudo" "apt-get" "install" "-y"))
   (when argv.force (args.push "--reinstall"))
   (set args (args.concat pkgs))
   (when (sh.run (quote args))
@@ -240,6 +239,37 @@
     (when pkgs.length
       (aptInstall pkgs))))
 
+(defn isPacmanSystem ()
+  (var result (sh.exec "which pacman"))
+  (= 0 result.code))
+
+(defn pacmanInstalledPackage (pkg)
+  (var result (sh.exec (quote (array "pacman" "-Q" pkg))))
+  (= 0 result.code))
+
+(defn pacmanInstalledGroup (pkg)
+  (var result (sh.exec (quote (array "pacman" "-Qg" pkg))))
+  (= 0 result.code))
+
+(defn pacmanInstalled (pkg)
+  (|| (pacmanInstalledPackage pkg)
+      (pacmanInstalledGroup pkg)))
+
+(defn pacmanInstall (pkgs)
+  (print (ansi "Install: " "magenta+bold")
+         (ansi (pkgs.join " ") "yellow+bold") "\n")
+  (var args (array "sudo" "pacman" "-S"))
+  (set args (args.concat pkgs))
+  (when (sh.run (quote args))
+    (error "apt-get install failed.")))
+
+(defn pacmanSync ()
+  (var pkgs (map (_.toArray arguments) expand))
+  (when (isPacmanSystem)
+    (set pkgs (pkgs.filter (function (i) (! (pacmanInstalled i)))))
+    (when pkgs.length
+      (pacmanInstall pkgs))))
+
 (set module.exports
   (object argv setArgv
           withSource withSource
@@ -251,4 +281,5 @@
           npm (object set npmSet)
           git git
           url url
-          pkg (object apt aptGet)))
+          pkg (object apt aptGet
+                      pacman pacmanSync)))

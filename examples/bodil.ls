@@ -40,6 +40,16 @@
  ;; Apps
  "firefox" "chromium-browser" "deluge-gtk" "gimp" "inkscape")
 
+;; Declare packages to install using Pacman. As with `declare.pkg.apt`,
+;; these will be ignored on systems where Pacman is not installed.
+
+(declare.pkg.pacman
+ "base-devel" "xorg" "tmux" "pulseaudio" "alsa-utils"
+ "gnome-session" "gnome-settings-daemon-compat" "w3m" "openssh"
+ "git" "xdotool" "gnome-keyring" "unclutter" "python-pyudev" "python-dbus"
+ "python-gobject2" "onboard" "ttf-liberation" "ttf-ubuntu-font-family"
+ "ttf-droid")
+
 ;; Declare symlinks to the dotfiles repo in the home directory.
 ;; The link declaration takes the path to the symlink, relative to
 ;; the target root, as its first argument, and the symlink destination,
