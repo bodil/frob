@@ -1,3 +1,5 @@
+(include "./lib/macros.ls")
+
 (var _ (require "underscore"))
 (var sh (require "execSync"))
 (var quote (.quote (require "shell-quote")))

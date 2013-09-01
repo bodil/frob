@@ -5,9 +5,7 @@
 (var template (require "whiskers"))
 (var argv (require "./argv"))
 
-(var context
-     (object source (process.cwd)
-             target argv.target))
+(var context (object))
 
 (defn expand (s)
   (template.render s (_.extend context process.env)))

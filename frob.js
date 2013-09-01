@@ -7,10 +7,10 @@ var sh = require("execSync");
 var quote = require("shell-quote").quote;
 
 var argv = require("./lib/argv");
-var declare = require("./lib/declare");
 
 var closureHeader = '(var invoke (function (declare)\n'
-      + '(declare.pkg.apt "git" "curl")\n';
+      + '(declare.pkg.apt "git" "curl")\n'
+      + '(declare.pkg.pacman "git" "curl")\n';
 var closureFooter = '))\n(invoke declare)';
 
 var script;
@@ -28,7 +28,14 @@ if (fs.existsSync(argv._[0])) {
   }
 }
 
+var cwd = process.cwd();
+process.chdir(__dirname);
+var declare = require("./lib/declare");
+declare.var("source", cwd);
+declare.var("target", argv.target);
 script = lisp._compile(closureHeader + script + closureFooter, argv._[0]);
+process.chdir(cwd);
+
 try {
   eval(script);
 } catch(e) {

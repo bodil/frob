@@ -1,3 +1,5 @@
+(include "./lib/macros.ls")
+
 (defn configParse (c)
   (var out {}
        current null)
