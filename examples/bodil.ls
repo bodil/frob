@@ -132,6 +132,23 @@
 
 (declare.npm.set "prefix" "{target}/node")
 
-;; Finally, check out the .emacs.d from Github.
+;; Checkout the GNOME3 Maximus extension using Mercurial.
+
+(declare.hg "https://bitbucket.org/mathematicalcoffee/maximus-gnome-shell-extension"
+            "workspace/ext/maximus")
+(declare.fs.link
+ ".local/share/gnome-shell/extensions/maximus@mathematical.coffee.gmail.com"
+ "{target}/workspace/ext/maximus/maximus@mathematical.coffee.gmail.com")
+
+;; Check out the .emacs.d from Github.
 
 (declare.git "git@github.com:bodil/emacs.d.git" ".emacs.d")
+
+;; Now for something more complicated: checkout Emacs from Github and build
+;; it from source.
+
+;(declare.git "git@github.com:emacsmirror/emacs.git" "workspace/ext/emacs")
+
+;; Ensure Emacs build dependencies are installed.
+
+;(declare.pkg.pacman "base-devel" "gtk3")

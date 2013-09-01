@@ -7,6 +7,7 @@
           fs (require "./fs")
           npm (require "./npm")
           git (require "./git")
+          hg (require "./hg")
           url (require "./url")
           pkg (object apt (require "./apt")
                       pacman (require "./pacman"))))

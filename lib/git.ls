@@ -3,6 +3,7 @@
 (var argv (require "./argv"))
 (var error (require "./error"))
 (var context (require "./context"))
+(var configParse (require "./config-parse"))
 (var fs (require "fs"))
 (var path (require "path"))
 (var sh (require "execSync"))
@@ -31,30 +32,10 @@
   (when (!= 0 result)
     (error "git pull command failed.")))
 
-(defn gitConfigParse (c)
-  (var out {}
-       current null)
-  (each c
-    (function (line)
-      (var line (line.trim)
-           match (line.match /\[(.*)\]/))
-      (if match
-        (do
-          (var key (get 1 match))
-          (set current {})
-          (set key out current))
-        (do
-          (var match (line.match /\s*(\S+)\s*=\s*(\S+)\s*/))
-          (when match
-            (var key (get 1 match)
-                 value (get 2 match))
-            (set key current value))))))
-  out)
-
 (defn gitRemote (repo remote)
   (var configPath (path.join repo ".git" "config")
        configFile ((.split (fs.readFileSync configPath "utf-8")) "\n")
-       config (gitConfigParse configFile)
+       config (configParse configFile)
        key (str "remote \"" remote "\"")
        remote (get key config))
   (if remote remote.url null))
