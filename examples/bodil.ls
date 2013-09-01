@@ -136,9 +136,21 @@
 
 (declare.hg "https://bitbucket.org/mathematicalcoffee/maximus-gnome-shell-extension"
             "workspace/ext/maximus")
+(declare.var
+ "maximus"
+ "{target}/.local/share/gnome-shell/extensions/maximus@mathematical.coffee.gmail.com")
 (declare.fs.link
- ".local/share/gnome-shell/extensions/maximus@mathematical.coffee.gmail.com"
+ "{maximus}"
  "{target}/workspace/ext/maximus/maximus@mathematical.coffee.gmail.com")
+
+;; GNOME3 extensions usually need to have their schemas compiled.
+;; We use `declare.build` to declare a makefile like rule for rebuilding
+;; a target file when its dependencies have changed.
+
+(declare.build
+ "{maximus}/schemas/gschemas.compiled"
+ "{maximus}/schemas/org.gnome.shell.extensions.maximus.gschema.xml"
+ (array "glib-compile-schemas" "{maximus}/schemas"))
 
 ;; Check out the .emacs.d from Github.
 

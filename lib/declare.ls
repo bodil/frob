@@ -9,5 +9,6 @@
           git (require "./git")
           hg (require "./hg")
           url (require "./url")
+          build (require "./build")
           pkg (object apt (require "./apt")
                       pacman (require "./pacman"))))
