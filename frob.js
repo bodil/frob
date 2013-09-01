@@ -3,28 +3,11 @@
 var fs = require("fs");
 var lisp = require("lispyscript");
 require("lispyscript/lib/require");
-var file = require("file");
 var sh = require("execSync");
 var quote = require("shell-quote").quote;
 
+var argv = require("./lib/argv");
 var declare = require("./lib/declare");
-
-var argv = require("optimist")
-      .boolean("u")
-      .alias("u", "update")
-      .describe("u", "refetch remote assets")
-      .boolean("f")
-      .alias("f", "force")
-      .describe("f", "apply changes even when not needed")
-      .usage("Usage: $0 script-file")
-      .argv;
-
-if (argv._.length !== 1) {
-  require("optimist").showHelp();
-  process.exit(1);
-}
-
-declare.argv(argv);
 
 var closureHeader = '(var invoke (function (declare)\n'
       + '(declare.pkg.apt "git" "curl")\n';

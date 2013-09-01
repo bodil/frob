@@ -19,7 +19,7 @@
 ;; Only {source} and {target} exist by default, but you can use
 ;; `declare.var` to define more if you need to.
 
-(declare.withSource (declare.git "git@caturday.me:dotfiles" "{HOME}/.dotfiles"))
+(declare.withSource (declare.git "git@caturday.me:dotfiles" "{target}/.dotfiles"))
 
 ;; Declare packages that need to be installed on a Debian based system.
 ;; `declare.pkg.apt` will be silently ignored on a system without
@@ -60,8 +60,8 @@
 
 ;; You can also install packages from AUR.
 
-(declare.pkg.aur
- "package-query" "yaourt" "i3-gnome" "awesome-gnome")
+(declare.pkg.pacman.aur
+ "package-query" "yaourt" "i3-gnome" "awesome-gnome" "bittorrent-sync")
 
 ;; Declare symlinks to the dotfiles repo in the home directory.
 ;; The link declaration takes the path to the symlink, relative to
@@ -71,18 +71,18 @@
 ;; they will be created as necessary.
 
 ;; Crypto dotfiles:
-(declare.link ".ssh" "ssh")
-(declare.link ".gnupg" "gnupg")
+(declare.fs.link ".ssh" "ssh")
+(declare.fs.link ".gnupg" "gnupg")
 
 ;; These contain private keys, so we declare them to be inaccessible
 ;; to others. For ssh, this is even mandatory.
 
-(declare.perms ".ssh" "go-rwx")
-(declare.perms ".gnupg" "go-rwx")
+(declare.fs.perms ".ssh" "go-rwx")
+(declare.fs.perms ".gnupg" "go-rwx")
 
 ;; Bash
-(declare.link ".profile" "profile")
-(declare.link ".bashrc" "bashrc")
+(declare.fs.link ".profile" "profile")
+(declare.fs.link ".bashrc" "bashrc")
 
 ;; I keep my tmux setup in a public git repo rather than my
 ;; dotfiles repo, so this will need to be cloned separately.
@@ -91,22 +91,22 @@
 
 ;; Tmux
 (declare.git "git@github.com:bodil/tmuxified.git" ".tmux")
-(declare.link ".tmux.conf" "{target}/.tmux/tmux.conf")
+(declare.fs.link ".tmux.conf" "{target}/.tmux/tmux.conf")
 
 ;; Misc X11
-(declare.link ".fonts" "fonts")
-(declare.link ".Xmodmap" "Xmodmap")
-(declare.link ".xmonad" "xmonad")
-(declare.link ".i3" "i3")
-(declare.link ".i3status.conf" "i3/i3status.conf")
+(declare.fs.link ".fonts" "fonts")
+(declare.fs.link ".Xmodmap" "Xmodmap")
+(declare.fs.link ".xmonad" "xmonad")
+(declare.fs.link ".i3" "i3")
+(declare.fs.link ".i3status.conf" "i3/i3status.conf")
 
 ;; GNOME
-(declare.link ".config/autostart/tabletd.desktop"
+(declare.fs.link ".config/autostart/tabletd.desktop"
               "autostart/tabletd.desktop")
 
 ;; Dev
-(declare.link ".gitconfig" "gitconfig")
-(declare.link ".lein" "lein")
+(declare.fs.link ".gitconfig" "gitconfig")
+(declare.fs.link ".lein" "lein")
 
 ;; Set up $HOME/bin with useful scripts.
 
@@ -117,14 +117,14 @@
 ;; supported by your curl build are supported.
 
 (declare.url "bin/hub" "http://hub.github.com/standalone")
-(declare.perms "bin/hub" "+x")
-(declare.link "man/man1/hub.1" "man/hub.1")
+(declare.fs.perms "bin/hub" "+x")
+(declare.fs.link "man/man1/hub.1" "man/hub.1")
 
 (declare.url "bin/lein"
              "https://raw.github.com/technomancy/leiningen/stable/bin/lein")
-(declare.perms "bin/lein" "+x")
+(declare.fs.perms "bin/lein" "+x")
 
-(declare.link "bin/window-focus" "bin/window-focus")
+(declare.fs.link "bin/window-focus" "bin/window-focus")
 
 ;; The `npm.set` declaration is used to configure user local NPM settings.
 ;; In this case, we tell NPM to use $HOME/node as its global installation
