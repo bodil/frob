@@ -44,11 +44,19 @@
 ;; these will be ignored on systems where Pacman is not installed.
 
 (declare.pkg.pacman
- "base-devel" "xorg" "tmux" "pulseaudio" "alsa-utils"
- "gnome" "gnome-settings-daemon-compat" "w3m" "openssh"
- "git" "xdotool" "unclutter" "python-pyudev" "python-dbus"
- "python-gobject2" "onboard" "ttf-liberation" "ttf-ubuntu-font-family"
- "ttf-droid")
+ "base-devel" "tmux" "pulseaudio" "alsa-utils" "w3m" "openssh" "git"
+
+ "xorg" "xdotool" "unclutter" "python-pyudev" "python-dbus"
+ "python-gobject2" "onboard"
+
+ "ttf-liberation" "ttf-ubuntu-font-family" "ttf-droid"
+
+ "gnome" "gnome-settings-daemon-compat" "gnome-tweak-tool"
+ "notify-osd"
+
+ "firefox" "emacs"
+
+ "deluge" "python2-notify" "pygtk")
 
 ;; You can also install packages from AUR.
 
