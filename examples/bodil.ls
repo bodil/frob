@@ -45,10 +45,15 @@
 
 (declare.pkg.pacman
  "base-devel" "xorg" "tmux" "pulseaudio" "alsa-utils"
- "gnome-session" "gnome-settings-daemon-compat" "w3m" "openssh"
- "git" "xdotool" "gnome-keyring" "unclutter" "python-pyudev" "python-dbus"
+ "gnome" "gnome-settings-daemon-compat" "w3m" "openssh"
+ "git" "xdotool" "unclutter" "python-pyudev" "python-dbus"
  "python-gobject2" "onboard" "ttf-liberation" "ttf-ubuntu-font-family"
  "ttf-droid")
+
+;; You can also install packages from AUR.
+
+(declare.pkg.aur
+ "package-query" "yaourt" "i3-gnome" "awesome-gnome")
 
 ;; Declare symlinks to the dotfiles repo in the home directory.
 ;; The link declaration takes the path to the symlink, relative to

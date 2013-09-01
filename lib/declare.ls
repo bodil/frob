@@ -1,6 +1,7 @@
 (var file (require "file"))
 (var fs (require "fs"))
 (var path (require "path"))
+(var os (require "os"))
 (var sh (require "execSync"))
 (var rimraf (.sync (require "rimraf")))
 (var template (require "whiskers"))
@@ -258,7 +259,7 @@
 (defn pacmanInstall (pkgs)
   (print (ansi "Install: " "magenta+bold")
          (ansi (pkgs.join " ") "yellow+bold") "\n")
-  (var args (array "sudo" "pacman" "-S"))
+  (var args (array "sudo" "pacman" "--noconfirm" "-S"))
   (set args (args.concat pkgs))
   (when (sh.run (quote args))
     (error "apt-get install failed.")))
@@ -269,6 +270,32 @@
     (set pkgs (pkgs.filter (function (i) (! (pacmanInstalled i)))))
     (when pkgs.length
       (pacmanInstall pkgs))))
+
+(defn pacmanAurUrl (pkg)
+  (var chop (pkg.slice 0 2))
+  (str "https://aur.archlinux.org/packages/"
+       chop "/" pkg "/" pkg ".tar.gz"))
+
+(defn pacmanAurBuild (pkg)
+  (var origCwd (process.cwd)
+       tmpPath (path.join (os.tmpdir) "frob" pkg)
+       buildPath (path.join tmpPath pkg)
+       archivePath (path.join tmpPath (str pkg ".tar.gz")))
+  (rimraf tmpPath)
+  (mkdir tmpPath)
+  (curl (pacmanAurUrl pkg) archivePath)
+  (when (sh.run (quote (array "cd" tmpPath ";" "tar" "xvf" archivePath)))
+    (error "Package extraction failed."))
+  (when (sh.run (quote (array "cd" buildPath ";"
+                              "makepkg" "-i" "-s" "--noconfirm")))
+    (error "makepkg failed."))
+  (rimraf tmpPath))
+
+(defn pacmanAur ()
+  (each (_.toArray arguments)
+    (function (pkg)
+      (when (|| (! (pacmanInstalled pkg)) (|| argv.force argv.update))
+        (pacmanAurBuild pkg url)))))
 
 (set module.exports
   (object argv setArgv
@@ -282,4 +309,5 @@
           git git
           url url
           pkg (object apt aptGet
-                      pacman pacmanSync)))
+                      pacman pacmanSync
+                      aur pacmanAur)))
