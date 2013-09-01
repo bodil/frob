@@ -6,6 +6,7 @@
 (var sh (require "execSync"))
 (var quote (.quote (require "shell-quote")))
 (var print (.print (require "util")))
+(var ansi (.set (require "ansi-color")))
 (var rimraf (.sync (require "rimraf")))
 (var argv (require "./argv"))
 (var error (require "./error"))
