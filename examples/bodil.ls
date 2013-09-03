@@ -25,6 +25,9 @@
 ;; `declare.pkg.apt` will be silently ignored on a system without
 ;; a dpkg installation.
 
+(declare.pkg.apt.ppa "ppa:vincent-c/ppa"
+                     "ppa:chris-lea/node.js")
+
 (declare.pkg.apt
  ;; Editors
  "emacs24" "emacs24-el" "joe"
@@ -32,6 +35,9 @@
  ;; Tools
  "build-essential" "libtool" "devscripts" "dput" "tmux" "gnupg" "openssh-client"
  "htop" "isoquery" "w3m" "nodejs" "nodejs-dev" "openjdk-7-jre" "ruby"
+
+ ;; Ponies
+ "ponysay" "fortune-mod"
 
  ;; X11
  "i3" "xcompmgr" "fonts-liberation" "fonts-droid" "x11-xserver-utils"
