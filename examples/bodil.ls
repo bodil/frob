@@ -62,7 +62,9 @@
 
  "firefox" "emacs"
 
- "deluge" "python2-notify" "pygtk")
+ "deluge" "python2-notify" "pygtk"
+
+ "ponysay" "fortune-mod")
 
 ;; You can also install packages from AUR.
 
