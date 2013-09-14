@@ -27,7 +27,7 @@
 
 (declare.pkg.apt
  ;; Editors
- "emacs24" "emacs24-el" "joe"
+ "joe"
 
  ;; Tools
  "build-essential" "libtool" "devscripts" "dput" "tmux" "gnupg" "openssh-client"
@@ -54,7 +54,7 @@
  "gnome" "gnome-settings-daemon-compat" "gnome-tweak-tool"
  "notify-osd"
 
- "firefox" "emacs"
+ "firefox" "gimp" "inkscape" "chromium"
 
  "deluge" "python2-notify" "pygtk")
 
@@ -156,11 +156,55 @@
 
 (declare.git "git@github.com:bodil/emacs.d.git" ".emacs.d")
 
-;; Now for something more complicated: checkout Emacs from Github and build
+;; Check out typescript-tools and install it using npm.
+
+(declare.git "https://github.com/clausreinke/typescript-tools.git"
+             "workspace/ext/typescript-tools")
+
+(declare.build "node/bin/tss"
+               "workspace/ext/typescript-tools/bin/tss"
+               (array "cd" "{target}/workspace/ext/typescript-tools" ";"
+                      "npm" "install" "-g"))
+
+
+;; Now for something more ambitious: checkout Emacs from Github and build
 ;; it from source.
 
-;(declare.git "git@github.com:emacsmirror/emacs.git" "workspace/ext/emacs")
+(declare.var "emacs" "{target}/workspace/ext/emacs")
+(declare.var "emacsSrc" "{emacs}/source")
+(declare.var "emacsBin" "{emacs}/build")
+
+(declare.git "git@github.com:emacsmirror/emacs.git" "{emacsSrc}")
 
 ;; Ensure Emacs build dependencies are installed.
 
-;(declare.pkg.pacman "base-devel" "gtk3")
+(declare.pkg.pacman "base-devel" "gtk2")
+
+;; Checkout the `master` branch—this repo starts in the `about` branch
+;; after cloning.
+
+(declare.build "{emacsSrc}/README" []
+               (array "cd" "{emacsSrc}" ";" "git" "checkout" "master"))
+
+;; Now build and install Emacs.
+
+(declare.build "{emacsSrc}/configure"
+               (array "{emacsSrc}/configure.ac" "{emacsSrc}/autogen.sh")
+               (array "cd" "{emacsSrc}" ";" "./autogen.sh"))
+
+(declare.build "{emacsBin}/Makefile"
+               (array "{emacsSrc}/configure")
+               (array "mkdir" "-p" "{emacsBin}" ";"
+                      "cd" "{emacsBin}" ";"
+                      "{emacsSrc}/configure"
+                      "--with-x-toolkit=gtk3"
+                      "--with-xft" "--with-xim"
+                      "--with-gconf" "--with-dbus"
+                      "--with-gif=no"
+                      "--prefix" "{target}/emacs"))
+
+(declare.build "{emacsBin}/src/emacs" "{emacsSrc}"
+                (array "cd" "{emacsBin}" ";" "make" "-j5" "bootstrap"))
+
+(declare.build "{target}/emacs/bin" "{emacsBin}"
+               (array "cd" "{emacsBin}" ";" "make" "install"))
