@@ -66,10 +66,11 @@
   (rimraf tmpPath))
 
 (defn pacmanAur ()
-  (each (_.toArray arguments)
-    (function (pkg)
-      (when (|| (! (pacmanInstalled pkg)) (|| argv.force argv.update))
-        (pacmanAurBuild pkg)))))
+  (when (isPacmanSystem)
+    (each (_.toArray arguments)
+          (function (pkg)
+                    (when (|| (! (pacmanInstalled pkg)) (|| argv.force argv.update))
+                      (pacmanAurBuild pkg))))))
 
 (set pacmanSync.aur pacmanAur)
 (set module.exports pacmanSync)
