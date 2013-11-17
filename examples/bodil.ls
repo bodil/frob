@@ -57,8 +57,7 @@
 
  "ttf-liberation" "ttf-ubuntu-font-family" "ttf-droid"
 
- "gnome" "gnome-settings-daemon-compat" "gnome-tweak-tool"
- "notify-osd"
+ "cinnamon"
 
  "firefox" "gimp" "inkscape" "chromium"
 
@@ -69,7 +68,10 @@
 ;; You can also install packages from AUR.
 
 (declare.pkg.pacman.aur
- "package-query" "yaourt" "i3-gnome" "awesome-gnome" "bittorrent-sync")
+ "package-query" "yaourt" "bittorrent-sync"
+
+ "cinnamon-applet-weather" "cinnamon-applet-window-buttons"
+ "cinnamon-applet-hardware-monitor")
 
 ;; Declare symlinks to the dotfiles repo in the home directory.
 ;; The link declaration takes the path to the symlink, relative to
