@@ -178,13 +178,14 @@
 
 
 ;; Now for something more ambitious: checkout Emacs from Github and build
-;; it from source.
+;; it from source. We'll use the `xwidget` branch because who doesn't want
+;; to use Emacs as a web browser?
 
 (declare.var "emacs" "{target}/workspace/ext/emacs")
 (declare.var "emacsSrc" "{emacs}/source")
 (declare.var "emacsBin" "{emacs}/build")
 
-(declare.git "git@github.com:emacsmirror/emacs.git" "{emacsSrc}")
+(declare.git "git://git.savannah.gnu.org/emacs.git" "{emacsSrc}")
 
 ;; Ensure Emacs build dependencies are installed.
 
@@ -194,7 +195,7 @@
 ;; after cloning.
 
 (declare.build "{emacsSrc}/README" []
-               (array "cd" "{emacsSrc}" ";" "git" "checkout" "master"))
+               (array "cd" "{emacsSrc}" ";" "git" "checkout" "xwidget"))
 
 ;; Now build and install Emacs.
 
@@ -211,6 +212,7 @@
                       "--with-xft" "--with-xim"
                       "--with-gconf" "--with-dbus"
                       "--with-gif=no"
+                      "--with-xwidgets"
                       "--prefix" "{target}/emacs"))
 
 (declare.build "{emacsBin}/src/emacs" "{emacsSrc}"
