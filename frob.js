@@ -8,9 +8,9 @@ var quote = require("shell-quote").quote;
 
 var argv = require("./lib/argv");
 
-var closureHeader = '(var invoke (function (declare)\n'
-      + '(declare.pkg.apt "git" "curl")\n'
-      + '(declare.pkg.pacman "git" "curl")\n';
+var closureHeader = '(var invoke (function (declare)\n' +
+      '(declare.pkg.apt "git" "curl")\n' +
+      '(declare.pkg.pacman "git" "curl")\n';
 var closureFooter = '))\n(invoke declare)';
 
 var script;
