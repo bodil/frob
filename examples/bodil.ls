@@ -59,7 +59,7 @@
 
  "cinnamon"
 
- "firefox" "gimp" "inkscape" "chromium"
+ "firefox-nightly-replacement" "gimp" "inkscape" "chromium"
 
  "deluge" "python2-notify" "pygtk"
 
@@ -68,7 +68,9 @@
 ;; You can also install packages from AUR.
 
 (declare.pkg.pacman.aur
- "package-query" "yaourt" "bittorrent-sync"
+ "package-query" "yaourt"
+
+ "bittorrent-sync" "gnome-encfs-hg"
 
  "cinnamon-applet-weather" "cinnamon-applet-window-buttons"
  "cinnamon-applet-hardware-monitor")
