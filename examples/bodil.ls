@@ -51,29 +51,12 @@
 
 (declare.pkg.pacman
  "base-devel" "tmux" "pulseaudio" "alsa-utils" "w3m" "openssh" "git"
-
- "xorg" "xdotool" "unclutter" "python-pyudev" "python-dbus"
- "python-gobject2" "onboard"
-
- "ttf-liberation" "ttf-ubuntu-font-family" "ttf-droid"
-
- "cinnamon"
-
- "firefox-nightly-replacement" "gimp" "inkscape" "chromium"
-
- "deluge" "python2-notify" "pygtk"
-
  "ponysay" "fortune-mod")
 
 ;; You can also install packages from AUR.
 
 (declare.pkg.pacman.aur
- "package-query" "yaourt"
-
- "bittorrent-sync" "gnome-encfs-hg"
-
- "cinnamon-applet-weather" "cinnamon-applet-window-buttons"
- "cinnamon-applet-hardware-monitor")
+ "package-query" "yaourt")
 
 ;; Declare symlinks to the dotfiles repo in the home directory.
 ;; The link declaration takes the path to the symlink, relative to
@@ -107,14 +90,7 @@
 
 ;; Misc X11
 (declare.fs.link ".fonts" "fonts")
-(declare.fs.link ".Xmodmap" "Xmodmap")
-(declare.fs.link ".xmonad" "xmonad")
-(declare.fs.link ".i3" "i3")
-(declare.fs.link ".i3status.conf" "i3/i3status.conf")
-
-;; GNOME
-(declare.fs.link ".config/autostart/tabletd.desktop"
-              "autostart/tabletd.desktop")
+(declare.fs.link ".echinus" "echinus")
 
 ;; Dev
 (declare.fs.link ".gitconfig" "gitconfig")
@@ -136,37 +112,15 @@
              "https://raw.github.com/technomancy/leiningen/stable/bin/lein")
 (declare.fs.perms "bin/lein" "+x")
 
-(declare.fs.link "bin/window-focus" "bin/window-focus")
-
 ;; The `npm.set` declaration is used to configure user local NPM settings.
 ;; In this case, we tell NPM to use $HOME/node as its global installation
 ;; directory. This corresponds to calling `npm config --local set`.
 
 (declare.npm.set "prefix" "{target}/node")
 
-;; Checkout the GNOME3 Maximus extension using Mercurial.
+;; Check out the .emacs.d from Gitlab.
 
-(declare.hg "https://bitbucket.org/mathematicalcoffee/maximus-gnome-shell-extension"
-            "workspace/ext/maximus")
-(declare.var
- "maximus"
- "{target}/.local/share/gnome-shell/extensions/maximus@mathematical.coffee.gmail.com")
-(declare.fs.link
- "{maximus}"
- "{target}/workspace/ext/maximus/maximus@mathematical.coffee.gmail.com")
-
-;; GNOME3 extensions usually need to have their schemas compiled.
-;; We use `declare.build` to declare a makefile like rule for rebuilding
-;; a target file when its dependencies have changed.
-
-(declare.build
- "{maximus}/schemas/gschemas.compiled"
- "{maximus}/schemas/org.gnome.shell.extensions.maximus.gschema.xml"
- (array "glib-compile-schemas" "{maximus}/schemas"))
-
-;; Check out the .emacs.d from Github.
-
-(declare.git "git@github.com:bodil/emacs.d.git" ".emacs.d")
+(declare.git "git@gitlab.com:bodil/emacs-d.git" ".emacs.d")
 
 ;; Check out typescript-tools and install it using npm.
 
