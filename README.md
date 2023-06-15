@@ -2,33 +2,11 @@
 
 Frob is a configuration management tool designed for personal use.
 
-Given a simple declarative config file (actually [LispyScript](http://lispyscript.com) with a declarative API provided), Frob can quickly and reliably set up your home directory and workstation environment just the way you like it.
+Given a simple declarative config file (in TypeScript), Frob can quickly and reliably set up your home directory and workstation environment just the way you like it.
 
-Frob also makes it easy to keep all your dotfiles in a Git repo, and to keep it in sync across machines.
+Frob also makes it easy to keep all your dotfiles in a synced folder.
 
-## Installation
-
-Frob needs a working Node installation in order to run. If that's in order, you simply run the following to install Frob:
-
-```sh
-$ npm install frob
-```
-
-## Usage
-
-Run Frob on your config file to get going:
-
-```sh
-$ frob my-setup.ls
-```
-
-Note that unless specifically told to (using the `--force` flag), Frob will only make the necessary changes to bring your system into the order described in the config file. Thus, running it twice should result in the second run having no effect at all.
-
-## Config files
-
-See the exhaustively commented [example config](examples/bodil.ls).
-
-# License
+## License
 
 Copyright 2013 Bodil Stokke
 
